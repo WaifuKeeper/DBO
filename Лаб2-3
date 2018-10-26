@@ -1,0 +1,32 @@
+CREATE TABLE Speciality(
+IdSpeciality int not null PRIMARY KEY, /*Унікальний ідентифікаційний номер спеціальності*/ 
+SpecialityName nvarchar(10) not null/*Назва спеціальності*/
+);
+
+CREATE TABLE Groups(
+GroupId int IDENTITY not null PRIMARY KEY,/*Унікальний ідентифікаційний номер групи*/
+IdSpeciality int not null FOREIGN KEY RefereNCES Speciality(IdSpeciality) ON DELETE CASCADE/*Посилання на номер cпеціальності*/
+);
+
+CREATE TABLE Students(
+IdStud int IDENTITY(1,1) not null PRIMARY KEY,/*Номер студентського квитка*/
+FNAME varchar(10) not null,/*Ім'я студента*/
+LName varchar(20) not null,/*Прізвище студента*/
+MName varchar(20) not null,/*Прізвище студента*/
+IdGroup int not null FOREIGN KEY REFERENCES Groups(GroupId) ON DELETE CASCADE,/*Посилання на номер групи*/
+Addres nvarchar(60) not null,/*Адреса студента*/
+Daate date not null,/*Дата народження студента*/
+Phone phone UNIQUE not null/*Телефоний  номер студента*/
+);
+
+CREATE TABLE Objeect(
+ObjeectId int IDENTITY not null PRIMARY KEY,/*Унікальний ідентифікаційний номер для кожного предмета*/
+ObjeectName nvarchar(30) not null/*Коротке текстове описання предмету*/
+);
+
+CREATE TABLE Ecaluation(
+IdStud int not null FOREIGN KEY REFERENCES Students(IdStud) ON DELETE CASCADE,/*Посилання на номер студента*/
+IdObjeect int not null FOREIGN KEY REFERENCES Objeect(ObjeectId) ON DELETE CASCADE,/*Посилання на номер предмета*/
+Evaluation int not null,/*Оцінка*/
+eval_date date NOT NULL DEFAULT GETDATE(),
+);
